@@ -72,8 +72,8 @@ public class StepDefs {
     }
 
     @Then("{string} field should be same with path param")
-    public void field_should_be_same_with_path_param(String key) {
-        thenPart.body(key, Matchers.is(pathParamValue));
+    public void field_should_be_same_with_path_param(String path) {
+        thenPart.body(path, Matchers.is(pathParamValue));
     }
 
     @Then("following fields should not be null")
@@ -153,8 +153,8 @@ public class StepDefs {
     }
 
     @Then("the field value for {string} path should be equal to {string}")
-    public void the_field_value_for_path_should_be_equal_to(String key, String expectedValue) {
-        thenPart.body(key, Matchers.equalTo(expectedValue));
+    public void the_field_value_for_path_should_be_equal_to(String path, String expectedValue) {
+        thenPart.body(path, Matchers.equalTo(expectedValue));
 
     }
 
