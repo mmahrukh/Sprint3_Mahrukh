@@ -1,6 +1,7 @@
 package com.library2.pages;
 
 import com.library2.utilities.Driver;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -20,7 +21,7 @@ public abstract class BasePage {
     @FindBy(xpath = "//a[@href='#books']")
     public WebElement books;
 
-    @FindBy(xpath = "//a[@id='navbarDropdown']")
+    @FindBy(css = "#navbarDropdown>span")
     public WebElement accountHolderName;
 
     @FindBy(xpath = "//a[.='Log Out']")
@@ -41,6 +42,10 @@ public abstract class BasePage {
             this.books.click();
         }
 
+    }
+
+    public String accountHolderName(String name){
+        return Driver.getDriver().findElement(By.xpath("//span[.=\""+name+"\"]")).getText();
     }
 
 }
