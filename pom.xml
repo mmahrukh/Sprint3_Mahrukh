@@ -121,7 +121,8 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.0.0-M3</version>
                 <configuration>
-                    <parallel>methods</parallel>
+                    <!-- <parallel>methods</parallel> -->
+                    <parallel>none</parallel>   <!-- database when running in parallel are causing issues for my test -->
                     <useUnlimitedThreads>false</useUnlimitedThreads>
                     <threadCount>4</threadCount>
                     <perCoreThreadCount>false</perCoreThreadCount>
