@@ -109,7 +109,7 @@ public class LibraryAPI_Utils {
         Map<String, Object> userMap = new LinkedHashMap<>();
 
         // fake user data
-        String fullName = faker.name().fullName();
+        String fullName = "Mahh" + faker.name().fullName();
         String email = fullName.substring(0, fullName.indexOf(" ")) + faker.number().numberBetween(0,10) + "@library";
         System.out.println("email = " + email);
 
