@@ -22,9 +22,12 @@ import org.openqa.selenium.Keys;
 import java.util.List;
 import java.util.Map;
 
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.*;
+
 public class StepDefs {
 
-    RequestSpecification givenPart = RestAssured.given().log().uri();
+    RequestSpecification givenPart = RestAssured.given().log().ifValidationFails();
     Response response;
     JsonPath jsonPath;
     ValidatableResponse thenPart;
@@ -60,7 +63,7 @@ public class StepDefs {
 
     @Then("{string} field should not be null")
     public void field_should_not_be_null(String path) {
-        thenPart.body(path, Matchers.notNullValue());   // valid path != null
+        thenPart.body(path, notNullValue());   // valid path != null
     }
 
     // -- us02 --
@@ -80,7 +83,7 @@ public class StepDefs {
     public void following_fields_should_not_be_null(List<String> paths) {
 
         for (String path : paths) {
-            thenPart.body(path, Matchers.notNullValue());
+            thenPart.body(path, notNullValue());
         }
 
         /*
@@ -149,12 +152,12 @@ public class StepDefs {
         jsonPath = response.jsonPath();
         thenPart = response.then();                                  // initialize thenPart for validations to avoid NullPointException
 
-        response.prettyPrint();
+        //response.prettyPrint();
     }
 
     @Then("the field value for {string} path should be equal to {string}")
     public void the_field_value_for_path_should_be_equal_to(String path, String expectedValue) {
-        thenPart.body(path, Matchers.equalTo(expectedValue));
+        thenPart.body(path, equalTo(expectedValue));
 
     }
 
@@ -189,11 +192,11 @@ public class StepDefs {
         String UIIsbn = bookPage.bookISBN(dbData.get("isbn")).getText(); //stored the bookISBN from UI in a variable
 
         //5. Compare API, DB, UI data
-        Assert.assertEquals(expectedAPIData.get("name"), dbData.get("name"));
-        Assert.assertEquals(String.valueOf(expectedAPIData.get("year")), dbData.get("year"));
+        assertEquals(expectedAPIData.get("name"), dbData.get("name"));
+        assertEquals(String.valueOf(expectedAPIData.get("year")), dbData.get("year"));
 
-        Assert.assertEquals(expectedAPIData.get("name"), UIBookName);                        //compared API to UI bookName
-        Assert.assertEquals(String.valueOf(expectedAPIData.get("isbn")), UIIsbn);           //compared API to UI ISBN
+        assertEquals(expectedAPIData.get("name"), UIBookName);                        //compared API to UI bookName
+        assertEquals(String.valueOf(expectedAPIData.get("isbn")), UIIsbn);           //compared API to UI ISBN
 
     }
 
@@ -215,9 +218,9 @@ public class StepDefs {
         dbData = DB_Utils.getRowMap(1);
 
         //4. Compare API with DB
-        Assert.assertEquals(expectedAPIData.get("full_name"), dbData.get("full_name"));
-        Assert.assertEquals(expectedAPIData.get("email"), dbData.get("email"));
-        Assert.assertEquals(String.valueOf(expectedAPIData.get("user_group_id")), dbData.get("user_group_id"));
+        assertEquals(expectedAPIData.get("full_name"), dbData.get("full_name"));
+        assertEquals(expectedAPIData.get("email"), dbData.get("email"));
+        assertEquals(String.valueOf(expectedAPIData.get("user_group_id")), dbData.get("user_group_id"));
 
     }
 
@@ -235,9 +238,11 @@ public class StepDefs {
     public void created_user_name_should_appear_in_dashboard_page() {
 
         String createdUserName = dbData.get("full_name");
-        String createdUserNameUI = Driver.getDriver().findElement(By.xpath("//span[.=\""+createdUserName+"\"]")).getText();
+        String createdUserNameUI = dashboardPage.accountHolderName(createdUserName);
 
-        Assert.assertEquals(createdUserName, createdUserNameUI);
+        //String createdUserNameUI = Driver.getDriver().findElement(By.xpath("//span[.=\""+createdUserName+"\"]")).getText();
+
+        assertEquals(createdUserName, createdUserNameUI);
 
     }
 

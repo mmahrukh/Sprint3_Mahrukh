@@ -24,7 +24,7 @@ public class LibraryAPI_Utils {
 
     public static String getToken(String email, String password) {
 
-        JsonPath jsonPath = RestAssured.given().log().uri()
+        JsonPath jsonPath = RestAssured.given().log().ifValidationFails()
                 .accept(ContentType.JSON)
                 .contentType(ContentType.URLENC)                 // Datatype I am sending to API
                 .formParam("email", email)
