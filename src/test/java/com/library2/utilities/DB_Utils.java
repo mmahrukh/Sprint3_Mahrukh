@@ -82,7 +82,9 @@ public class DB_Utils {
         try {
             if (rs != null) rs.close();
             if (stm != null) stm.close();
-            if (con != null) con.close();
+            if (con != null && !con.isClosed()){
+                con.close();
+            }
         } catch (Exception e) {
             System.out.println("ERROR OCCURRED WHILE CLOSING RESOURCES " + e.getMessage());
         }
